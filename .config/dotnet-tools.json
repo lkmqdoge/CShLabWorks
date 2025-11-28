@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "dotnet-suggest": {
+      "version": "2.0.0",
+      "commands": [
+        "dotnet-suggest"
+      ],
+      "rollForward": false
+    },
+    "easydotnet": {
+      "version": "2.3.30",
+      "commands": [
+        "dotnet-easydotnet"
+      ],
+      "rollForward": false
+    }
+  }
+}
