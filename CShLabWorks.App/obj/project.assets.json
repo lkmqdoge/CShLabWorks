@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net9.0": {}
+    "net9.0": {
+      "CShLabWorks.First/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/CShLabWorks.First.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CShLabWorks.First.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "CShLabWorks.First/1.0.0": {
+      "type": "project",
+      "path": "../CShLabWorks.First/CShLabWorks.First.csproj",
+      "msbuildProject": "../CShLabWorks.First/CShLabWorks.First.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net9.0": []
+    "net9.0": [
+      "CShLabWorks.First >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "/home/lkmqdoge/.nuget/packages/": {}
@@ -32,7 +51,11 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/home/lkmqdoge/repo/CShLabWorks/CShLabWorks.First/CShLabWorks.First.csproj": {
+              "projectPath": "/home/lkmqdoge/repo/CShLabWorks/CShLabWorks.First/CShLabWorks.First.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
