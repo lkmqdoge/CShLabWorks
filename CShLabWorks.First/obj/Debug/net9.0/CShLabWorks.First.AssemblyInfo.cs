@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CShLabWorks.First")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9301dbbc0031fd66dc8a09745762ecf971ddb6c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1769784a6915e2b037690e2c2d24d353d2080b32")]
 [assembly: System.Reflection.AssemblyProductAttribute("CShLabWorks.First")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CShLabWorks.First")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

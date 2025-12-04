@@ -36,5 +36,16 @@ public class NotificationManager
     {
 
     }
+
+    // 5
+    public Dictionary<NotificationPriority, int> GetCountByPriotity()
+    {
+
+    }
+
+    public Enumerable<Notification> GetRecentNotifications(TimeSpan time)
+    {
+
+    }
 }
 
