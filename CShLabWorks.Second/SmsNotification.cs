@@ -2,6 +2,6 @@ namespace CShLabWorks.Second;
 
 public sealed record SmsNotification : Notification
 {
-    public string PhoneNumber { get; set; }
+    public string PhoneNumber { get; init; } = string.Empty;
 }
 

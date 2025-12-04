@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CShLabWorks.First\CShLabWorks.First.csproj" />
+    <ProjectReference Include="..\CShLabWorks.Second\CShLabWorks.Second.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

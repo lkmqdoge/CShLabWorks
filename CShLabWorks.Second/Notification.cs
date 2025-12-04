@@ -2,23 +2,16 @@
 
 public record Notification
 {
-    public int Id;
+    public int Id { get; init;}
 
-    public int Type;
+    public int Type { get; init; }
 
-    public string Title;
+    public string Title { get; init; } = string.Empty;
 
-    public string Message;
+    public string Message { get; init;} = string.Empty;
 
-    public DateTime TimeStamp;
+    public DateTime TimeStamp { get; init; } = DateTime.Now;
 
-    public NotificationPriority Priority;
+    public NotificationPriority Priority { get; init; }
 }
 
-public enum NotificationPriority
-{
-    Low,
-    Normal,
-    High,
-    Critical,
-}

@@ -2,50 +2,91 @@ namespace CShLabWorks.Second;
 
 public class NotificationManager
 {
-    public event Action<Notification> NotificationSend;
+    //  возникает при отправке любого оповещения. Получает
+    //  отправленное оповещение в качестве параметра
+    public event Action<Notification>? NotificationSend;
 
-    public event Action<Notification> CriticalNotificationSend;
+    // возникает при получении критического оповещения
+    public event Action<Notification>? CriticalNotificationSend;
 
-    public event Action<Notification> NotificationFilter;
+    // событие-фильтр, позволяющее подписчикам отклонять
+    // оповещения по некоторому условию
+    public event Action<Notification>? NotificationFilter;
 
-    public readonly List<Notification> NotificationHistory { get; } = [];
+    // история всех отосланных оповещений
+    public List<Notification> NotificationHistory { get; init; } = [];
 
-    public readonly Dictionary<NotificationPriority,List<Action<Notification>>> Subsribers { get; } = [];
+    // словарь подписчиков, сгруппированных по приоритетам. Каждый подписчик
+    // представляет собой делегат, получающий на вход объект-оповещение
+    public Dictionary<NotificationPriority,List<Action<Notification>>> Subsribers { get; init; } = [];
 
-    public void Subsribe()
+    // подписка на оповещения определенного приоритета. В качестве
+    // параметров получает приоритет и функцию-обработчик объекта-оповещения
+    public void Subsribe(NotificationPriority priority, Action<Notification> action)
+        => Subsribers[priority].Add(action);
+
+    // отписка от оповещений. В качестве параметров получает
+    // приоритет и функцию-обработчик объекта-оповещения
+    public void Unsubscribe(NotificationPriority priority, Action<Notification> action)
+        => Subsribers[priority].Remove(action);
+
+    // отправка полученного в параметрах оповещения всем подписчикам
+    public void Send(Notification notification)
     {
+        foreach (var pair in Subsribers)
+            pair.Value.ForEach(a => a(notification));
 
+        NotificationHistory.Add(notification);
+
+        if (notification.Priority.Equals(NotificationPriority.Critical))
+            CriticalNotificationSend?.Invoke(notification);
+        else
+            NotificationSend?.Invoke(notification);
     }
 
-    public void Unsubscribe()
-    {
+    // получение списка оповещений по некоторому условию, 
+    // передаваемому в качестве параметра
+    public List<Notification> GetNotifications(Func<Notification, bool> condition)
+        => [.. NotificationHistory.Where(condition) ];
 
+    // обработка конкретного оповещения. Объект-оповещение
+    // и функция обработчик передаются в качестве параметров.
+    public void ProccesNotification(Notification notification, Action<Notification> action)
+    {
+        action(notification);
+        NotificationHistory.Add(notification);
     }
 
-    public void Send()
-    {
-
-    }
-
-    public List<Notification> GetNotifications()
-    {
-
-    }
-
-    public void ProccesNotification()
-    {
-
-    }
-
-    // 5
+    // возвращает словарь с количеством оповещений каждого приоритета;
     public Dictionary<NotificationPriority, int> GetCountByPriotity()
     {
+        Dictionary<NotificationPriority, int> res = [];
 
+        foreach(var priority in Enum.GetValues<NotificationPriority>())
+        {
+            res.Add(priority, Subsribers[priority].Count);
+        }
+
+        return res;
     }
 
-    public Enumerable<Notification> GetRecentNotifications(TimeSpan time)
-    {
+    // возвращает перечисление из всех оповещений за
+    // последний период времени. Период передается в качестве параметра типа TimeSpan;
+    public IEnumerable<Notification> GetRecentNotifications(TimeSpan time)
+        => NotificationHistory.Where(n =>
+                DateTime.Now
+                .Subtract(time)
+                .CompareTo(n.TimeStamp) < 0);
 
+    public Dictionary<Type, Notification> GroupByType()
+    {
+        throw new NotImplementedException();
+    }
+
+    // вычисляет среднее количество оповещений в указанном интервале времени
+    public double GetAverageNotificationsPerHour()
+    {
+        throw new NotImplementedException();
     }
 }
 
