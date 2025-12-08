@@ -1,6 +1,6 @@
 namespace CShLabWorks.Second;
 
-public record PushNotification
+public sealed record PushNotification : Notification
 {
     public int DeviceId { get; init; }
 

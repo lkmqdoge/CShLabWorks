@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CShLabWorks.App")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49a46496c2071050d7c8dc3935d84cf50ff7c3dc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7ed6307100dea161b3331ab9506833185a9780e")]
 [assembly: System.Reflection.AssemblyProductAttribute("CShLabWorks.App")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CShLabWorks.App")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
