@@ -20,7 +20,7 @@
           "net9.0"
         ],
         "sources": {
-          "/nix/store/7mz4fvkii3b8s40wwkx6vgfk6spsfq3d-dotnet-sdk-9.0.111/share/dotnet/library-packs": {},
+          "/nix/store/p583bx4jsyvjkr1inwkcgis2vskl99ng-dotnet-sdk-9.0.112/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -67,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/nix/store/7mz4fvkii3b8s40wwkx6vgfk6spsfq3d-dotnet-sdk-9.0.111/share/dotnet/sdk/9.0.111/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/nix/store/p583bx4jsyvjkr1inwkcgis2vskl99ng-dotnet-sdk-9.0.112/share/dotnet/sdk/9.0.112/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
@@ -87,7 +87,7 @@
           "net9.0"
         ],
         "sources": {
-          "/nix/store/7mz4fvkii3b8s40wwkx6vgfk6spsfq3d-dotnet-sdk-9.0.111/share/dotnet/library-packs": {},
+          "/nix/store/p583bx4jsyvjkr1inwkcgis2vskl99ng-dotnet-sdk-9.0.112/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -127,7 +127,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/nix/store/7mz4fvkii3b8s40wwkx6vgfk6spsfq3d-dotnet-sdk-9.0.111/share/dotnet/sdk/9.0.111/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/nix/store/p583bx4jsyvjkr1inwkcgis2vskl99ng-dotnet-sdk-9.0.112/share/dotnet/sdk/9.0.112/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
@@ -147,7 +147,7 @@
           "net9.0"
         ],
         "sources": {
-          "/nix/store/7mz4fvkii3b8s40wwkx6vgfk6spsfq3d-dotnet-sdk-9.0.111/share/dotnet/library-packs": {},
+          "/nix/store/p583bx4jsyvjkr1inwkcgis2vskl99ng-dotnet-sdk-9.0.112/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -187,7 +187,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/nix/store/7mz4fvkii3b8s40wwkx6vgfk6spsfq3d-dotnet-sdk-9.0.111/share/dotnet/sdk/9.0.111/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/nix/store/p583bx4jsyvjkr1inwkcgis2vskl99ng-dotnet-sdk-9.0.112/share/dotnet/sdk/9.0.112/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

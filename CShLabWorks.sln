@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CShLabWorks.First", "CShLab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CShLabWorks.Second", "CShLabWorks.Second\CShLabWorks.Second.csproj", "{C6BFEDCC-D3B6-48D9-80A0-B8AFC5818181}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CShLabWorks.Third.Plugins.Host", "CShLabWorks.Third.Plugins.Host\CShLabWorks.Third.Plugins.Host.csproj", "{AA566D6B-7017-4361-82D1-7019F04558EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CShLabWorks.Third.Plugins.Lib", "CShLabWorks.Third.Plugins.Lib\CShLabWorks.Third.Plugins.Lib.csproj", "{8CE3F40C-0E9C-4C12-BD7C-BE2ACBB1228B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{C6BFEDCC-D3B6-48D9-80A0-B8AFC5818181}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6BFEDCC-D3B6-48D9-80A0-B8AFC5818181}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6BFEDCC-D3B6-48D9-80A0-B8AFC5818181}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA566D6B-7017-4361-82D1-7019F04558EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA566D6B-7017-4361-82D1-7019F04558EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA566D6B-7017-4361-82D1-7019F04558EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA566D6B-7017-4361-82D1-7019F04558EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CE3F40C-0E9C-4C12-BD7C-BE2ACBB1228B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CE3F40C-0E9C-4C12-BD7C-BE2ACBB1228B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CE3F40C-0E9C-4C12-BD7C-BE2ACBB1228B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CE3F40C-0E9C-4C12-BD7C-BE2ACBB1228B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
