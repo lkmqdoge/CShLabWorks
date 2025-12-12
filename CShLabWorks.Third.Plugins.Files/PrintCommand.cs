@@ -1,4 +1,6 @@
-namespace CShLabWorks.Third.Plugins.Lib;
+using CShLabWorks.Third.Plugins.Lib;
+
+namespace CShLabWorks.Third.Plugins.Files;
 
 [CommandsAlias(Aliases = ["write", "echo"])]
 public class PrintCommand : ICommand
@@ -17,6 +19,7 @@ public class PrintCommand : ICommand
     {
         var message = args.Length == 1 ? args[0] : "";
         Console.WriteLine(message);
+
         return 0;
     }
 }

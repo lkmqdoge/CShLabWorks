@@ -1,4 +1,6 @@
-namespace CShLabWorks.Third.Plugins.Lib;
+using CShLabWorks.Third.Plugins.Lib;
+
+namespace CShLabWorks.Third.Plugins.Files;
 
 [CommandsAlias(Aliases = ["bat", "content", "printfile"])]
 public class CatCommand : ICommand

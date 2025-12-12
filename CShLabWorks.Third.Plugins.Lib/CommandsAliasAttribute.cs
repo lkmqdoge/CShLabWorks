@@ -4,6 +4,6 @@ namespace CShLabWorks.Third.Plugins.Lib;
 public class CommandsAliasAttribute(params string[] aliases)
     : Attribute
 {
-    public string[] Aliases = aliases;
+    public string[] Aliases { get; } = aliases;
 }
 
