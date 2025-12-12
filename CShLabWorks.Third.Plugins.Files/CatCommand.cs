@@ -16,9 +16,10 @@ public class CatCommand : ICommand
 
     public int Execute(params string[] args)
     {
+        args.ToList().ForEach(Console.WriteLine);
+
         if (args.Length == 0)
             return -1;
-
         try
         {
             var filename = args[0];

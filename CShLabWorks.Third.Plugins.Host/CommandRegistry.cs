@@ -4,32 +4,39 @@ namespace CShLabWorks.Third.Plugins.Host;
 
 public class CommandRegistry
 {
-    private readonly Dictionary<string, ICommand> _commands = [];
+    public Dictionary<string, ICommand> Commands { get; init; } = [];
 
-    public void Register(ICommand cmd)
+    public void Register(Type cmd)
     {
         var attrs = cmd
-            .GetType()
             .GetCustomAttributes(typeof(CommandsAliasAttribute), true)
             .Cast<CommandsAliasAttribute>();
 
-        foreach (var attr in attrs)
-        {
-            foreach(var alias in attr.Aliases)
-            {
-                if (_commands.TryGetValue(alias, out _))
-                {
-                    Console.WriteLine($"возник конфлик имен/алисов с {alias}");
-                }
+        var instance = Activator
+            .CreateInstance(cmd);
 
-            }
+        if (instance is ICommand commandInstance)
+        {
+            AddCommandName(commandInstance.Name, commandInstance);
+            attrs
+                .SelectMany(at => at.Aliases)
+                .ToList()
+                .ForEach(al => AddCommandName(al, commandInstance));
         }
     }
 
     public ICommand? Find(string key)
-        => _commands.TryGetValue(key, out var cmd) ? cmd : null;
+        => Commands.TryGetValue(key, out var cmd) ? cmd : null;
 
     public IEnumerable<ICommand> GetAllCommands()
-        => _commands.Values;
+        => Commands.Values;
+
+    private void AddCommandName(string name, ICommand command)
+    {
+        if (Commands.TryGetValue(name, out _))
+            Console.WriteLine($"возник конфлик имен/алисов с {name}");
+        else
+            Commands.Add(name, command);
+    }
 }
 

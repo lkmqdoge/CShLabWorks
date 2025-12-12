@@ -3,12 +3,9 @@ run:
 
 build_third_lab:
   mkdir -p build
-  mkdir -p build/Plugins
+  mkdir -p build/plugins
 
-  dotnet build ./CShLabWorks.Third.Plugins.Lib/
-  dotnet build --self-contained ./CShLabWorks.Third.Plugins.Host/
+  dotnet build
 
-  cp ./CShLabWorks.Third.Plugins.Lib/bin/Debug/net9.0/CShLabWorks.Third.Plugins.Lib.dll build/Plugins/
-  cp ./CShLabWorks.Third.Plugins.Host/bin/Debug/net9.0/CShLabWorks.Third.Plugins.Host build/
-  cp ./CShLabWorks.Third.Plugins.Host/bin/Debug/net9.0/CShLabWorks.Third.Plugins.Host.dll build
-
+  cp ./CShLabWorks.Third.Plugins.Files/bin/Debug/net9.0/CShLabWorks.Third.Plugins.Files.dll ./build/plugins/
+  cp ./CShLabWorks.Third.Plugins.Math/bin/Debug/net9.0/CShLabWorks.Third.Plugins.Math.dll ./build/plugins/

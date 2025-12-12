@@ -1,22 +1,33 @@
 using System.Reflection;
+using CShLabWorks.Third.Plugins.Lib;
 
 namespace CShLabWorks.Third.Plugins.Host;
 
 public class PluginStorage
 {
+    public List<Type> CommandTypes { get; init; } = [];
+
     public void LoadPlugins(string pluginsDir)
     {
-        foreach (var item in Directory.EnumerateFiles(pluginsDir))
+        if (!Directory.Exists(pluginsDir))
         {
-            if (Path.GetExtension(item) == ".dll")
-            {
-                var lib = Assembly.LoadFile(item);
+            Console.WriteLine($"НЕ НАЙДЕНО: [{pluginsDir}]");
+            return;
+        }
 
-                foreach(Type type in lib.GetExportedTypes())
-                {
-                    var c = Activator.CreateInstance(type);
-                }
-            }
+        foreach (var filename in Directory.EnumerateFiles(pluginsDir, "*.dll"))
+        {
+            var lib = Assembly.LoadFile(filename);
+            var target = typeof(ICommand);
+
+            // все что комманды не асбтрактное и не интерфейс
+            var commands = lib
+                .GetExportedTypes()
+                .Where(t => target.IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
+                .ToList();
+
+            commands.ForEach(t => Console.WriteLine($"LOADED: [{t}]"));
+            CommandTypes.AddRange(commands);
         }
     }
 }

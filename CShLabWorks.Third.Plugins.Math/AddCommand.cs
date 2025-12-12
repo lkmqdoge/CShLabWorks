@@ -5,7 +5,7 @@ namespace CShLabWorks.Third.Plugins.Math;
 [CommandsAlias(Aliases = ["sum"])]
 public class AddCommand : ICommand
 {
-    public string Name { get; set; } = "cat";
+    public string Name { get; set; } = "add";
 
     public string Description { get; set; } =
         """
