@@ -9,6 +9,6 @@ public class FileSearchOptions
 
     public string ToFind { get; set; } = string.Empty;
 
-    public int MaxJobs;
+    public int MaxJobs { get; set; } = Environment.ProcessorCount;
 }
 

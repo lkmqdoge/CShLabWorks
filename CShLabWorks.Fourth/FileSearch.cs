@@ -1,107 +1,150 @@
+using System.Collections.Concurrent;
+
 namespace CShLabWorks.Fourth;
 
-public class FileSearch
+public static class FileSearch
 {
-    private bool _isRunning = true;
-
-    public List<TextPosition> TextSearch(FileSearchOptions options)
+    public static void Run()
     {
-        var res = new List<TextPosition>();
-        var files = options.Masks.SelectMany(m => Directory.EnumerateFiles(options.Root, m));
-        foreach (var filename in files)
+        // ввод директори
+        Console.WriteLine("ВВОД <СЛОВО> <ПУТЬ/К/ДИРЕКТОРИИ> <\"*.txt\"> <\"*.log\"> ..");
+        var r = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(r))
+            return;
+        var parts = r.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var options = new FileSearchOptions()
         {
-            var lines = File.ReadAllLines(filename);
-            // индекс строки
-            for (int i = 0; i<lines.Length; i++)
-            {
-                var s = lines[i];
-                int index = s.IndexOf(options.ToFind); // индедс в строке 
+            ToFind = parts[0],
+            Root = Path.Combine(Environment.CurrentDirectory, parts[1]),
+            Masks = [.. parts.Skip(2) ]
+        };
 
-                while (index != -1)
+        // паралелизм или не
+        Console.WriteLine("Parallel? <yes/no> <MAXJOBS> (default=no)");
+        var p = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(p))
+            return;
+        parts = p.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var useParralel = parts[0].Equals("yes", StringComparison.OrdinalIgnoreCase);
+
+        var files = GetFiles(options);
+        if (files is null)
+        {
+            Console.WriteLine("Файлы не напйдены");
+            return;
+        }
+
+        var res = new List<TextPosition>();
+        if (useParralel)
+        {
+            if (parts.Length == 2 && int.TryParse(parts[1], out var maxJobs))
+                options.MaxJobs = maxJobs;
+
+            var tokenSource = new CancellationTokenSource();
+            Task.Run(() => {
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
                 {
-                    var old = index;
-                    index = s.IndexOf(options.ToFind, index + 1);
-                    res.Add(new TextPosition(filename, i, old));
+                    tokenSource.Cancel();
                 }
+            });
+            for (int i = options.MaxJobs; i < Environment.ProcessorCount
+                    && !tokenSource.IsCancellationRequested; i++)
+            {
+                options.MaxJobs = i;
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                res = TextSearchParallel(files, options, tokenSource.Token);
+                watch.Stop();
+                var elapsedMs = watch.ElapsedMilliseconds;
+                Console.WriteLine($"Сделано с {i} потоками за {elapsedMs} MC");
             }
         }
+        else
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            res = TextSearch(files, options);
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine($"Сделано с 1 потокам за {elapsedMs} MC");
+        }
+    }
+
+    public static string[] GetFiles(FileSearchOptions options)
+    {
+        var files = options.Masks
+            .SelectMany(m => Directory.EnumerateFiles(options.Root, m))
+            .Distinct();
+
+        Console.WriteLine($"Найдено файлов {files.ToList().Count}");
+        return [.. files ];
+    }
+
+    public static List<TextPosition> TextSearch(string[] files, FileSearchOptions options)
+    {
+        var res = new List<TextPosition>();
+        foreach (var filename in files)
+            SearchInFile(filename, options.ToFind, res);
         return res;
     }
 
-    // public List<TextPosition> ParallelTextSearch(FileSearchOptions options)
-    // {
-    //     var files = options.Masks.SelectMany(m => Directory.EnumerateFiles(options.Root, m));
-    //     foreach (var filename in files)
-    //     {
-    //         var lines = File.ReadAllLines(filename);
-    //     }
-    // }
-
-    public void Run()
+    public static List<TextPosition> TextSearchParallel(
+            string[] files,
+            FileSearchOptions options,
+            CancellationToken token)
     {
-        var s = "sezon";
-        var res = TextSearch(new FileSearchOptions()
+        var jobs = Math.Min(options.MaxJobs, files.Length);
+        var q = new ConcurrentQueue<string>(files);
+        var l = new List<Task>();
+        var res = new ConcurrentBag<TextPosition>();
+
+        for (int i = 0; i < jobs; i++)
         {
-            ToFind=s,
-            Root = "./trash",
-            Masks = [ "*.txt", "*.names"]
-        });
-        foreach(var r in res)
-            Console.WriteLine(r);
+            l.Add(Task.Run(() => {
+            while (q.TryDequeue(out var filename))
+                SearchInFile(filename, options.ToFind, res);
+            }, token));
+        }
 
-
-        // main loop
-        while (_isRunning)
+        try
         {
-            Console.WriteLine("ВВОД <ПУТЬ/К/ДИРЕКТОРИИ> <\".txt\"> <\".log\"> ..");
-            var r = Console.ReadLine();
+            Task.WaitAll(l, CancellationToken.None);
+        }
+        catch (AggregateException) {}
 
-            if (string.IsNullOrWhiteSpace(r))
-                continue;
+        return [.. res];
+    }
 
-            var parts = r.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+    private static void SearchInFile(string filename, string pattern, List<TextPosition> results)
+    {
+        var lines = File.ReadAllLines(filename);
+        for (int i = 0; i<lines.Length; i++) // строка
+        {
+            var s = lines[i];
+            int index = s.IndexOf(pattern); // индедс в строке 
 
-            var options = new FileSearchOptions()
+            while (index != -1)
             {
-                Root = parts[0],
-                Masks = [.. parts.Skip(1) ]
-            };
-
-            if (string.IsNullOrWhiteSpace(r))
-                continue;
-
-            Console.WriteLine("Parallel? Y/yes N/no (default=no)");
-            var p = Console.ReadLine();
-
-            // часики 
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-
-            var useParralel = false;
-
-            if (useParralel)
-                continue;
-            else
-                TextSearch(options);
-
-            // после завершения функц
-            watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
-            Console.WriteLine($"ПРОШЛО ВРЕМЕНИ: {elapsedMs} МИЛИСКУНД");
+                var old = index;
+                index = s.IndexOf(pattern, index + 1);
+                results.Add(new TextPosition(filename, i, old));
+            }
         }
     }
 
-    private static List<int> FindAllOccurrences(string text, string searchText)
+    private static void SearchInFile(string filename, string pattern, ConcurrentBag<TextPosition> results)
     {
-        var positions = new List<int>();
-        int index = text.IndexOf(searchText);
-
-        while (index != -1)
+        var lines = File.ReadAllLines(filename);
+        for (int i = 0; i<lines.Length; i++) // строка
         {
-            positions.Add(index);
-            index = text.IndexOf(searchText, index + 1);
-        }
+            var s = lines[i];
+            int index = s.IndexOf(pattern); // индедс в строке 
 
-        return positions;
+            while (index != -1)
+            {
+                var old = index;
+                index = s.IndexOf(pattern, index + 1);
+                results.Add(new TextPosition(filename, i, old));
+            }
+        }
     }
 }
 
